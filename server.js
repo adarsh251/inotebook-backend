@@ -9,9 +9,12 @@ const connectdb=require(path.join(__dirname,'config','dbConn.js'));
 connectdb();
 const register=require(path.join(__dirname,'routes','register.js'));
 const login=require(path.join(__dirname,'routes','auth.js'));
+const fetch=require(path.join(__dirname,'routes','fetchUser.js'));
+const verifyJWT=require(path.join(__dirname,"middleware","verifyJWT"));
 app.use('/register',register);
 app.use('/login',login);
-
+app.use(verifyJWT);
+app.use('/getdetails',fetch);
 mongoose.connection.once('open',()=>{
     console.log('connected to db');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

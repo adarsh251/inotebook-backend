@@ -19,16 +19,17 @@ const handleLogin= async (req,res)=>{
                     //sign token
                     const accessToken=jwt.sign(
                         {
-                            "email":req.body.email,
-                            "id":user._id,
+                            "user":{
+                                "email":req.body.email,
+                                "id":user._id,
+                            }
                         },
                         process.env.ACCESS_TOKEN_SECRET,
                         {
                             expiresIn:'10m',
                         }
                     );
-                    res.cookie(accessToken);
-                    res.status(200).json({accessToken,user});
+                    res.status(200).json({accessToken});
                 }
                 else{
                     res.status(401).json({"msg":"Incorrect password"});

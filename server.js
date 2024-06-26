@@ -8,8 +8,9 @@ const path=require('path');
 const connectdb=require(path.join(__dirname,'config','dbConn.js'));
 connectdb();
 const register=require(path.join(__dirname,'routes','register.js'));
+const login=require(path.join(__dirname,'routes','auth.js'));
 app.use('/register',register);
-
+app.use('/login',login);
 
 mongoose.connection.once('open',()=>{
     console.log('connected to db');

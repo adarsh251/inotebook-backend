@@ -7,7 +7,7 @@ const createUser= async (req,res)=>{
     // const arr=JSON.stringify(result);
     // console.log(arr);
     if(result.isEmpty()){
-        const user=await User.findOne({email:req.body.email});
+        const user=await User.findOne({email:req.body.email}).exec();
         if(!user){  
             try{
                 const salt=await bcrypt.genSalt(10);
@@ -29,8 +29,7 @@ const createUser= async (req,res)=>{
         }
     }
     else{
-        console.log(result.errors); 
-        res.status(404).json({"msg":result.errors[0].msg});
+        res.status(404).json({result});
     }
 }
 module.exports={createUser};

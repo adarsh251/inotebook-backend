@@ -3,6 +3,7 @@ const router=express.Router();
 const path=require('path');
 const {body}=require('express-validator');
 const userController=require(path.join(__dirname,'..','..','controllers','userController'));
+const refreshTokenController=require(path.join(__dirname,'..','..','controllers','refreshTokenController'));
 const verifyJWT=require(path.join(__dirname,"..","..","middleware","verifyJWT"));
 
 router.post('/register',
@@ -10,6 +11,9 @@ router.post('/register',
     body('email').isEmail().withMessage('Invalid email'),
     body('password').isLength({min:5}).withMessage('Password is too small'),
     userController.createUser
+);
+router.get('/refresh',
+    refreshTokenController.handleRefreshToken
 );
 router.post('/login',
     body('email').isEmail().withMessage('Invalid Email'),

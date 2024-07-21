@@ -7,7 +7,7 @@ const jwt=require('jsonwebtoken');
 
 const handleLogin= async (req,res)=>{
     const result=validationResult(req);
-    //console.log(req);
+    console.log(req);
     if(result.isEmpty()){
         try{
             const foundUser=await User.findOne({email:req.body.email}).exec();

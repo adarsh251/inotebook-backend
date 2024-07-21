@@ -9,6 +9,7 @@ const path=require('path');
 const connectdb=require(path.join(__dirname,'config','dbConn.js'));
 connectdb();
 app.use(cookieParser());
+app.use(express.static('build'));
 const verifyJWT=require(path.join(__dirname,"middleware","verifyJWT"));
 app.use('/user',require(path.join(__dirname,'routes','api','user.js')));
 app.use(verifyJWT);

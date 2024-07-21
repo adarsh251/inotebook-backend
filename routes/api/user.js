@@ -24,4 +24,7 @@ router.get('/credentials',
     verifyJWT,
     userController.fetchUser
 );
+router.post('/logout',
+    userController.handleLogout
+);
 module.exports=router;

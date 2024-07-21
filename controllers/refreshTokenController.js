@@ -11,7 +11,7 @@ const handleRefreshToken= async (req,res) =>{
         return res.sendStatus(401);
         }
     const refreshToken=cookies.jwt;
-    console.log(refreshToken);
+    //console.log(refreshToken);
     const foundUser=await User.findOne({refreshToken}).select("-password").exec();
     if(!foundUser) return res.sendStatus(403);
 
@@ -32,7 +32,7 @@ const handleRefreshToken= async (req,res) =>{
                 {expiresIn:'10m'}
             );
             //delete foundUser['password'];
-            console.log(foundUser);
+            //console.log(foundUser);
             res.send({foundUser,accessToken});
         }
     );

@@ -39,7 +39,7 @@ const handleLogin= async (req,res)=>{
                     //console.log(name);
                     foundUser.refreshToken=refreshToken;
                     const result=await foundUser.save();
-                    console.log(result);
+                    //console.log(result);
                     res.cookie('jwt',refreshToken,{httpOnly:true,maxAge:24*60*60*1000});//secure:true, httpOnly:true in production
                     const cookie=res.cookie;
                     //console.log(cookie);
@@ -101,7 +101,27 @@ const createUser= async (req,res)=>{
         }
     }
     else{
-        res.status(404).json({result});
+        res.status(404).json({"msg": result.errors[0].msg});
     }
 }
-module.exports={handleLogin,fetchUser,createUser};
+
+const handleLogout=async(req,res)=>{
+    const cookies=req.cookies;
+    if(!cookies?.jwt){
+        res.status(200).json({"msg":"logout successful"});
+    }
+    else{
+        const token=cookies.jwt;
+        res.clearCookie('jwt', { path: '/' });
+        const user=await User.findOne({refreshToken:token}).exec();
+        if(!user){
+            res.status(200).json({"msg":"logout successful"});
+        }
+        else{
+            user.refreshToken="";
+            const result=await user.save();
+            res.status(200).json({"msg":"logout successful"});
+        }
+    }
+}
+module.exports={handleLogin,fetchUser,createUser,handleLogout};

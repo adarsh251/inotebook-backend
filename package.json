@@ -18,7 +18,7 @@
   "description": "cloud notebook",
   "main": "server.js",
   "engines": {
-    "node":"14.x"
+    "node":"20.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
